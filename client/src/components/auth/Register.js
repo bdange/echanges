@@ -33,9 +33,9 @@ const Register = () => {
           },
         };
 
-        const body = JSON.stringify(newUser);
+        //const body = JSON.stringify(newUser);  -- No longer needed with new axios version.
 
-        const res = await axios.post('/api/users', body, config);
+        const res = await axios.post('/api/users', newUser, config);
         console.log(res.data);
       } catch (err) {
         console.error(err.response.data);
