@@ -1,8 +1,11 @@
 import React, { Fragment, useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { setAlert } from '../../actions/alert';
+import PropTypes from 'prop-types';
+//import axios from 'axios';
 
-const Register = () => {
+const Register = ({ setAlert }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,28 +21,27 @@ const Register = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log('Passwords do not match');
+      setAlert('Mots de passes ne correspondent pas', 'danger');
     } else {
-      const newUser = {
-        name,
-        email,
-        password,
-      };
-
-      try {
-        const config = {
-          haders: {
-            'Content-Type': 'application/json',
-          },
-        };
-
-        //const body = JSON.stringify(newUser);  -- No longer needed with new axios version.
-
-        const res = await axios.post('/api/users', newUser, config);
-        console.log(res.data);
-      } catch (err) {
-        console.error(err.response.data);
-      }
+      console.log('Success');
+      // NON REDUX VERSION.
+      // const newUser = {
+      //   name,
+      //   email,
+      //   password,
+      // };
+      // try {
+      //   const config = {
+      //     haders: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //   };
+      //   //const body = JSON.stringify(newUser);  -- No longer needed with new axios version.
+      //   const res = await axios.post('/api/users', newUser, config);
+      //   console.log(res.data);
+      // } catch (err) {
+      //   console.error(err.response.data);
+      // }
     }
   };
 
@@ -91,7 +93,7 @@ const Register = () => {
           />
         </div>
 
-        <input type='submit' value='Register' className='btn btn-primary' />
+        <input type='submit' value='Confirmer' className='btn btn-primary' />
         <p className='my-1'>
           Déjà inscrit ? <Link to='/login'>Connexion</Link>
         </p>
@@ -100,4 +102,8 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+};
+
+export default connect(null, { setAlert })(Register);
