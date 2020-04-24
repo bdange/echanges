@@ -8,7 +8,7 @@ import { getCurrentProfile } from '../../actions/profile';
 const Home = ({ getCurrentProfile, auth: { user }, profile: { profile } }) => {
   useEffect(() => {
     getCurrentProfile();
-  }, []);
+  }, [getCurrentProfile]);
 
   return (
     <Fragment>
